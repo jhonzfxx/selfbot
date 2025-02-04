@@ -22,7 +22,6 @@ print(Colorate.Horizontal(Colors.rainbow, """
                                             ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠥⠤⠄⠐⠊⠀⠀⠀⠀
     """))
 
-
 async def send_messages(token, target_id, message_content):
     num_messages = 200
 
@@ -56,12 +55,17 @@ async def send_messages(token, target_id, message_content):
         print(Colorate.Horizontal(Colors.rainbow, f"An error occurred {e}"))
 
 async def main():
-    try:
-        with open('token.txt', 'r') as file:
-            tokens = [line.strip() for line in file.readlines()]
-    except FileNotFoundError:
-        print(Colorate.Horizontal(Colors.rainbow, f"token.txt not found"))
+    # Prompt user to input the path for token.txt
+    token_path = input("Please enter the path to token.txt: ")
+
+    # Check if the file exists
+    if not os.path.exists(token_path):
+        print(Colorate.Horizontal(Colors.rainbow, f"File {token_path} not found"))
         return
+
+    # Read tokens from the provided file
+    with open(token_path, 'r') as file:
+        tokens = [line.strip() for line in file.readlines()]
 
     target_id = input("Discord User ID: ")
     message_content = input("Message: ")
